@@ -1,0 +1,110 @@
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import fs from 'fs';
+import path from 'path';
+import { defineConfig, Plugin } from 'vite';
+
+const CONTENT_MIME_TYPES: Record<string, string> = {
+  '.json': 'application/json; charset=utf-8',
+  '.md': 'text/markdown; charset=utf-8',
+  '.rst': 'text/plain; charset=utf-8',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.png': 'image/png',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.mp3': 'audio/mpeg',
+  '.m4a': 'audio/mp4',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.pdf': 'application/pdf',
+};
+
+function unifiedContentPlugin(basePath: string): Plugin {
+  const contentRoot = path.resolve(import.meta.dirname, 'content');
+  const normalizedBase = basePath.replace(/\/+$/, '');
+
+  return {
+    name: 'unified-content-directory',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const [rawUrl, rawQuery = ''] = (req.url || '').split('?');
+        const queryParams = new URLSearchParams(rawQuery);
+        if (
+          queryParams.has('import') ||
+          queryParams.has('raw') ||
+          queryParams.has('url') ||
+          queryParams.has('inline') ||
+          queryParams.has('worker')
+        ) {
+          return next();
+        }
+
+        let rel = rawUrl;
+        if (normalizedBase && rel.startsWith(normalizedBase)) {
+          rel = rel.slice(normalizedBase.length);
+        }
+        if (!rel.startsWith('/content/')) {
+          return next();
+        }
+
+        const subPath = decodeURIComponent(rel.slice('/content/'.length));
+        const target = path.resolve(contentRoot, subPath);
+        if (!target.startsWith(contentRoot) || !fs.existsSync(target) || fs.statSync(target).isDirectory()) {
+          return next();
+        }
+
+        const ext = path.extname(target).toLowerCase();
+        res.setHeader('Content-Type', CONTENT_MIME_TYPES[ext] || 'application/octet-stream');
+        res.setHeader('Cache-Control', 'no-store');
+        fs.createReadStream(target).pipe(res);
+      });
+    },
+    closeBundle(error?: Error) {
+      if (error) return;
+      const distDir = path.resolve(import.meta.dirname, 'dist');
+      const distContent = path.resolve(distDir, 'content');
+      if (fs.existsSync(distDir) && fs.existsSync(contentRoot)) {
+        fs.cpSync(contentRoot, distContent, { recursive: true, force: true });
+      }
+    },
+  };
+}
+
+export default defineConfig(() => {
+  const basePath = process.env.VITE_BASE_PATH || '/';
+
+  return {
+    base: basePath,
+    plugins: [
+      react(),
+      tailwindcss(),
+      unifiedContentPlugin(basePath),
+      {
+        name: 'copy-unbundled-src-assets',
+        apply: 'build',
+        closeBundle(error?: Error): void {
+          if (error) return;
+          const distDir = path.resolve(import.meta.dirname, 'dist');
+          const srcAssets = path.resolve(import.meta.dirname, 'src/assets');
+          const distAssets = path.resolve(distDir, 'src/assets');
+          if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
+            fs.cpSync(srcAssets, distAssets, { recursive: true, force: true });
+          }
+        },
+      },
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(import.meta.dirname, '.'),
+      },
+    },
+    server: {
+      hmr: process.env.DISABLE_HMR !== 'true',
+      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+    },
+  };
+});

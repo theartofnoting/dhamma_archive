@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-20T07:09:44.479Z",
+  "sayadaws": [
+    {
+      "id": "ven-parami",
+      "slug": "ven-parami",
+      "name": "Ven. Parami",
+      "honorificTitle": "Sayadaw",
+      "monastery": "Vipassana Bhavana Archive",
+      "location": "",
+      "lineage": "Vipassanā",
+      "years": "",
+      "biography": "Teachings and discourses of Ven. Parami.",
+      "primaryTexts": []
+    }
+  ],
+  "discourses": [],
+  "deletedPaths": [],
+  "tips": [],
+  "events": [
+    {
+      "id": "evt-satipatthana-10day",
+      "title": "10-Day Satipaṭṭhāna Vipassanā Course",
+      "eventType": "Retreat Course",
+      "startDate": "2027-03-31",
+      "endDate": "2027-03-31",
+      "timeRange": "05:00 – 21:00 Daily (Noble Silence)",
+      "locationOrLink": "Group Retreat Hall · Main Dhamma Sanctuary",
+      "teacher": "Ven. Dr. Nandamālābhivaṃsa & Senior Assistant Sayadaw",
+      "status": "Registration Open",
+      "description": "Ten-day intensive retreat following the Mahāsatipaṭṭhāna Sutta with alternating sitting and walking periods, evening Abhidhamma & Vipassanā discourses, and daily teacher interviews.",
+      "linkedFormTabId": "form-volunteer-dana",
+      "isUserCreated": true
+    },
+    {
+      "id": "evt-weekly-sunday-sitting",
+      "title": "Daily Meditation Practice",
+      "eventType": "Group Sitting",
+      "startDate": "2026-11-22",
+      "endDate": "2026-11-22",
+      "timeRange": "04:30 – 05:30",
+      "locationOrLink": "Dhama Study Room & Online Stream",
+      "teacher": "Group Practice Facilitators",
+      "status": "Registration Open",
+      "description": "One-hour silent Vipassanā sitting",
+      "isUserCreated": true
+    },
+    {
+      "id": "evt-paticcasamuppada-seminar",
+      "title": "Questions to Sayadaw Parami (Mogok Tradition)",
+      "eventType": "Dhamma Talk",
+      "startDate": "2026-11-20",
+      "endDate": "2026-11-20",
+      "timeRange": "14:00 – 16:30",
+      "locationOrLink": "https://us06web.zoom.us/j/87804585528?pwd=yh4JOrq2knCGhnI3fuMqusZSXwVVCG.1",
+      "teacher": "Ven. Parami",
+      "status": "Registration Open",
+      "description": "Focused afternoon discourse and Q&A exploring how contemplation of consciousness (cittānupassanā) severs the link between feeling (vedanā) and craving (taṇhā).",
+      "linkedFormTabId": "form-dhamma-questions",
+      "isUserCreated": true
+    }
+  ],
+  "formTabs": [
+    {
+      "id": "form-course-registration",
+      "label": "Course Registration",
+      "description": "Register for upcoming 10-day Vipassanā retreats, one-day Uposatha sittings, and weekly group meditation courses.",
+      "rawUrl": "",
+      "embedUrl": "",
+      "heightPx": 760,
+      "isDefault": true
+    },
+    {
+      "id": "form-dhamma-questions",
+      "label": "Questions for Sayadaw",
+      "description": "Submit meditation practice questions or Abhidhamma / Sutta study inquiries for upcoming Sayadaw Q&A sessions.",
+      "rawUrl": "",
+      "embedUrl": "",
+      "heightPx": 680,
+      "isDefault": true
+    },
+    {
+      "id": "form-volunteer-dana",
+      "label": "Volunteer & Dāna Support",
+      "description": "Offer Dhamma service, course meal coordination, audio transcription, or Pāli translation assistance for the group.",
+      "rawUrl": "",
+      "embedUrl": "",
+      "heightPx": 680,
+      "isDefault": true
+    }
+  ]
+}
