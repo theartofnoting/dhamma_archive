@@ -74,6 +74,54 @@ function unifiedContentPlugin(basePath: string): Plugin {
   };
 }
 
+const STATIC_LOCALE_META = {
+  vi: {
+    title: 'Vipassana Bhavana — Pháp Thoại, Thực Hành &amp; Khóa Thiền',
+    description:
+      'Sổ tay học Pháp của nhóm Vipassana Bhavana: lưu lại Pháp thoại từ các vị Thiền sư (Sayadaw), kinh nghiệm thực hành và lịch khóa thiền.',
+  },
+  en: {
+    title: 'Vipassana Bhavana — Dhamma Page &amp; Sayadaw Teachings',
+    description:
+      'Vipassana Bhavana Dhamma Page — group study notebook preserving Sayadaw discourses, meditation practice notes, shared retreat calendars, and online forms.',
+  },
+  my: {
+    title: 'Vipassana Bhavana — ဓမ္မစာမျက်နှာနှင့် ဆရာတော်များ၏ တရားတော်များ',
+    description:
+      'Vipassana Bhavana အဖွဲ့၏ ဆရာတော်များ ဟောကြားတော်မူသော တရားတော်များ၊ တရားရှုမှတ်နည်း လမ်းညွှန်များနှင့် တရားစခန်း စာရင်းသွင်းရာ စာမျက်နှာ။',
+  },
+} as const;
+
+function writeLocalizedHtmlEntrypoints(distDir: string) {
+  const indexHtmlPath = path.resolve(distDir, 'index.html');
+  if (!fs.existsSync(indexHtmlPath)) return;
+  const baseHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
+
+  fs.writeFileSync(path.resolve(distDir, '404.html'), baseHtml, 'utf-8');
+
+  for (const [locale, meta] of Object.entries(STATIC_LOCALE_META)) {
+    const localizedHtml = baseHtml
+      .replace(/<html\s+lang="[^"]*"/i, `<html lang="${locale}"`)
+      .replace(/<title>[^<]*<\/title>/i, `<title>${meta.title}</title>`)
+      .replace(
+        /<meta\s+name="description"\s+content="[^"]*"/i,
+        `<meta name="description" content="${meta.description}"`,
+      )
+      .replace(
+        /<meta\s+property="og:title"\s+content="[^"]*"/i,
+        `<meta property="og:title" content="${meta.title}"`,
+      )
+      .replace(
+        /<meta\s+property="og:description"\s+content="[^"]*"/i,
+        `<meta property="og:description" content="${meta.description}"`,
+      );
+
+    const localeDir = path.resolve(distDir, locale);
+    fs.mkdirSync(localeDir, { recursive: true });
+    fs.writeFileSync(path.resolve(localeDir, 'index.html'), localizedHtml, 'utf-8');
+  }
+}
+
 export default defineConfig(() => {
   const basePath = process.env.VITE_BASE_PATH || '/';
 
@@ -94,9 +142,30 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, { recursive: true, force: true });
           }
+          writeLocalizedHtmlEntrypoints(distDir);
         },
       },
     ],
+    build: {
+      rolldownOptions: {
+        output: {
+          codeSplitting: {
+            groups: [
+              {
+                name: 'vendor-react',
+                test: /node_modules[\\/](react|react-dom|scheduler)/,
+                priority: 20,
+              },
+              {
+                name: 'vendor-icons',
+                test: /node_modules[\\/]lucide-react/,
+                priority: 15,
+              },
+            ],
+          },
+        },
+      },
+    },
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, '.'),

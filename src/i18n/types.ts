@@ -56,6 +56,8 @@ export interface LocaleDictionary {
     groupBySayadaw: string;
     lightMode: string;
     darkMode: string;
+    emptyArchiveTitle: string;
+    emptyArchiveVisitorHint: string;
     emptyTitle: string;
     emptyVisitorHint: string;
     emptyOwnerHint: string;
@@ -74,6 +76,7 @@ export interface LocaleDictionary {
     addUnderSayadaw: string;
     discourseUnitSingular: string;
     discourseUnitPlural: string;
+    mediaLabel: string;
     edit: string;
     confirmDelete: string;
   };
@@ -129,6 +132,8 @@ export interface LocaleDictionary {
     emptyText: string;
     downloadIcs: string;
     registerBtn: string;
+    previousMonthAria: string;
+    nextMonthAria: string;
     monthNames: readonly string[];
     weekdays: readonly string[];
   };
@@ -161,6 +166,10 @@ export interface LocaleDictionary {
     continueStudy: string;
     paliLabel: string;
     recordingsTitle: string;
+    openAudio: string;
+    openResource: string;
+    audioUnsupported: string;
+    videoUnsupported: string;
   };
   footer: {
     subtitle: string;

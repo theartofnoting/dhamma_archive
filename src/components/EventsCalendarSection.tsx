@@ -36,9 +36,8 @@ export function EventsCalendarSection({
   const [selectedType, setSelectedType] = useState<EventType | 'All'>('All');
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  const now = new Date();
-  const [cursorYear, setCursorYear] = useState(now.getFullYear());
-  const [cursorMonth, setCursorMonth] = useState(now.getMonth());
+  const [cursorYear, setCursorYear] = useState(() => new Date().getFullYear());
+  const [cursorMonth, setCursorMonth] = useState(() => new Date().getMonth());
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<GroupEvent | null>(null);
@@ -205,7 +204,7 @@ export function EventsCalendarSection({
               <button
                 type="button"
                 onClick={() => shiftMonth(-1)}
-                aria-label="Previous month"
+                aria-label={dict.events.previousMonthAria}
                 className={`min-h-[36px] min-w-[36px] inline-flex items-center justify-center border ${THEME_CLASSES.borderStrong} ${THEME_CLASSES.inkPrimary} cursor-pointer`}
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -216,7 +215,7 @@ export function EventsCalendarSection({
               <button
                 type="button"
                 onClick={() => shiftMonth(1)}
-                aria-label="Next month"
+                aria-label={dict.events.nextMonthAria}
                 className={`min-h-[36px] min-w-[36px] inline-flex items-center justify-center border ${THEME_CLASSES.borderStrong} ${THEME_CLASSES.inkPrimary} cursor-pointer`}
               >
                 <ChevronRight className="h-4 w-4" />

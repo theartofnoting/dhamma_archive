@@ -1,5 +1,6 @@
 import 'dotenv/config';
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,14 +16,14 @@ const DEFAULT_LOCALE: ServerLocale = 'vi';
 
 const LOCALE_HTML_META: Record<ServerLocale, { title: string; description: string }> = {
   vi: {
-    title: 'Vipassana Bhavana — Trang Pháp Thoại & Giáo Pháp Thiền Sư',
+    title: 'Vipassana Bhavana — Pháp Thoại, Thực Hành & Khóa Thiền',
     description:
-      'Lưu trữ Pháp thoại Thiền sư (Sayadaw), hướng dẫn thực hành Vipassanā, lịch khóa thiền và đăng ký trực tuyến cho cộng đồng Vipassana Bhavana.',
+      'Sổ tay học Pháp của nhóm Vipassana Bhavana: lưu lại Pháp thoại từ các vị Thiền sư (Sayadaw), kinh nghiệm thực hành và lịch khóa thiền.',
   },
   en: {
     title: 'Vipassana Bhavana — Dhamma Page & Sayadaw Teachings',
     description:
-      'Vipassana Bhavana Dhamma Page — preserving Sayadaw discourses, meditation tips, group meditation courses, and submission forms.',
+      'Vipassana Bhavana Dhamma Page — group study notebook preserving Sayadaw discourses, meditation practice notes, shared retreat calendars, and online forms.',
   },
   my: {
     title: 'Vipassana Bhavana — ဓမ္မစာမျက်နှာနှင့် ဆရာတော်များ၏ တရားတော်များ',
@@ -127,6 +128,10 @@ async function createServer() {
     if (fs.existsSync(distDir)) {
       app.use(express.static(distDir, { index: false }));
       app.get('*', (req: Request, res: Response) => {
+        if (!isSpaDocumentRequest(req)) {
+          res.status(404).end();
+          return;
+        }
         const locale = resolveLocaleFromPath(req.path);
         if (!fs.existsSync(distIndexPath)) {
           res.status(404).send('Build output not found.');

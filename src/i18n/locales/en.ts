@@ -23,7 +23,7 @@ export const enDictionary: LocaleDictionary = {
     kicker: 'Dhamma Page · Living Repository',
     headline: 'Sayadaw Teachings, Meditation Practice & Group Courses',
     description:
-      'The living Dhamma repository for our Vipassana Bhavana group. Store and read discourses from our Sayadaw teachers, explore practical meditation tips, follow upcoming retreat courses, and submit registrations online.',
+      'A shared study notebook for our Vipassana Bhavana group. Store and review discourses from Sayadaw teachers, collect practice notes, follow available retreat calendars, and access registration forms.',
     imageAlt:
       'Monastic library desk with palm-leaf manuscripts and bound Pāli volumes in warm morning light',
     imageCaption:
@@ -37,9 +37,9 @@ export const enDictionary: LocaleDictionary = {
     kpiSayadawsLabel: 'Sayadaws',
     kpiSayadawsValueSuffix: 'teachers',
     kpiTipsLabel: 'Practice Tips',
-    kpiTipsValueSuffix: 'guides',
+    kpiTipsValueSuffix: 'notes',
     kpiEventsLabel: 'Courses & Events',
-    kpiEventsValueSuffix: 'scheduled',
+    kpiEventsValueSuffix: 'listed',
     kpiGithubAction: 'Manage GitHub Pages →',
   },
   catalog: {
@@ -56,6 +56,8 @@ export const enDictionary: LocaleDictionary = {
     groupBySayadaw: 'Group by Sayadaw',
     lightMode: 'Light Mode',
     darkMode: 'Dark Mode',
+    emptyArchiveTitle: 'No discourses have been archived yet.',
+    emptyArchiveVisitorHint: 'Saved Sayadaw talks and study notes will appear here once added.',
     emptyTitle: 'No discourses match the current filter.',
     emptyVisitorHint: 'Try clearing your search query or selecting a different Sayadaw.',
     emptyOwnerHint: 'Click "Add Teaching" to publish a new discourse into the archive.',
@@ -74,6 +76,7 @@ export const enDictionary: LocaleDictionary = {
     addUnderSayadaw: 'Add under this Sayadaw',
     discourseUnitSingular: 'discourse',
     discourseUnitPlural: 'discourses',
+    mediaLabel: 'Media',
     edit: 'Edit',
     confirmDelete: 'Confirm',
   },
@@ -124,7 +127,7 @@ export const enDictionary: LocaleDictionary = {
     kicker: 'Community Schedule',
     title: 'Retreat Courses & Group Events',
     description:
-      'Upcoming Vipassanā courses, daily group sittings, and live Q&A Dhamma talks with one-click .ics calendar downloads.',
+      'Published calendar of upcoming Vipassanā courses, daily sittings, and live Q&A Dhamma talks with one-click .ics downloads.',
     addEvent: 'Add Event',
     calendarView: 'Month Grid',
     listView: 'List View',
@@ -132,6 +135,8 @@ export const enDictionary: LocaleDictionary = {
     emptyText: 'No upcoming events match this filter.',
     downloadIcs: 'Add to Calendar (.ics)',
     registerBtn: 'Register Now →',
+    previousMonthAria: 'Previous month',
+    nextMonthAria: 'Next month',
     monthNames: [
       'January',
       'February',
@@ -178,6 +183,10 @@ export const enDictionary: LocaleDictionary = {
     continueStudy: 'Continue Study',
     paliLabel: 'Pāli',
     recordingsTitle: 'Recordings & Attached Media',
+    openAudio: 'Open Audio',
+    openResource: 'Open Resource',
+    audioUnsupported: 'Your browser does not support embedded audio playback.',
+    videoUnsupported: 'Your browser does not support embedded video playback.',
   },
   footer: {
     subtitle: 'Dhamma-dāna Open Repository hosted via GitHub Pages',

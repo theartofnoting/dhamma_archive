@@ -9,6 +9,10 @@ interface DiscourseMediaBlockProps {
   mediaItems?: DiscourseMediaItem[];
   discourseTitle: string;
   headingLabel?: string;
+  openAudioLabel?: string;
+  openResourceLabel?: string;
+  audioUnsupportedLabel?: string;
+  videoUnsupportedLabel?: string;
 }
 
 export function DiscourseMediaBlock({
@@ -16,6 +20,10 @@ export function DiscourseMediaBlock({
   mediaItems = [],
   discourseTitle,
   headingLabel = 'Recordings & Attached Media',
+  openAudioLabel = 'Open Audio',
+  openResourceLabel = 'Open Resource',
+  audioUnsupportedLabel = 'Your browser does not support embedded audio playback.',
+  videoUnsupportedLabel = 'Your browser does not support embedded video playback.',
 }: DiscourseMediaBlockProps) {
   const combinedItems: DiscourseMediaItem[] = [
     ...(audioReferenceUrl && audioReferenceUrl.trim()
@@ -113,12 +121,12 @@ export function DiscourseMediaBlock({
                     rel="noopener noreferrer"
                     className={`inline-flex items-center gap-1 text-xs ${THEME_CLASSES.inkMuted} hover:text-[var(--accent-ink)] shrink-0`}
                   >
-                    <span>Open Audio</span>
+                    <span>{openAudioLabel}</span>
                     <ExternalLink className="h-3 w-3" aria-hidden="true" />
                   </a>
                 </div>
                 <audio controls preload="metadata" src={resolved.src} className="w-full">
-                  Your browser does not support embedded audio playback.
+                  {audioUnsupportedLabel}
                 </audio>
                 {item.caption && (
                   <p className={`text-xs font-serif italic ${THEME_CLASSES.inkMuted}`}>
@@ -142,7 +150,7 @@ export function DiscourseMediaBlock({
                   src={resolved.src}
                   className={`w-full max-h-[420px] border ${THEME_CLASSES.borderStrong} bg-[#1C1917]`}
                 >
-                  Your browser does not support embedded video playback.
+                  {videoUnsupportedLabel}
                 </video>
                 {item.caption && (
                   <p className={`text-xs font-serif italic ${THEME_CLASSES.inkMuted}`}>
@@ -190,7 +198,7 @@ export function DiscourseMediaBlock({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 min-h-[36px] px-3.5 py-1.5 text-xs font-medium border border-[var(--ink-primary)] text-[var(--ink-primary)] hover:bg-[var(--ink-primary)] hover:text-[var(--surface-canvas)] transition-colors shrink-0"
               >
-                <span>Open Resource</span>
+                <span>{openResourceLabel}</span>
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
             </div>
